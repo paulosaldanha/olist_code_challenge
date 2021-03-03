@@ -23,11 +23,26 @@ class StoreProdutoRequest extends FormRequest
      */
     public function rules()
     {
+        $isUpdatingArray = str_contains($this->url(),'array');
+        $tipo_produto_id_rule = $this->method() != 'POST' ? ['required', 'exists:tipo_produtos,id'] : [];
+
+        if($isUpdatingArray){
+            return [
+                'name.*' => ['required', 'max:255', 'string'],
+                'quantity.*' => ['nullable', 'numeric'],
+                'tipo_produto_id.*' => $tipo_produto_id_rule,
+
+
+            ];
+        }
         return [
             'name' => ['required', 'max:255', 'string'],
             'quantity' => ['nullable', 'numeric'],
-            'tipo_produto_id' => ['required', 'exists:tipo_produtos,id'],
+            'tipo_produto_id' => $tipo_produto_id_rule,
+
+
         ];
+
     }
 
     /**

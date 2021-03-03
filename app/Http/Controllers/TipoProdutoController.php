@@ -39,7 +39,7 @@ class TipoProdutoController extends Controller
             "success" => true,
             "message" => "Tipo Produto criado com sucesso.",
             "data" => $tipoProdutos
-        ]);
+        ],201);
     }
 
     /**
@@ -94,7 +94,8 @@ class TipoProdutoController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Tipo Produto deletado com sucesso.",
-            "data" => $tipoProduto
+            "data" => $tipoProduto,
+
         ]);
     }
 }

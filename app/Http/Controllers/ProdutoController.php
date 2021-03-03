@@ -32,14 +32,15 @@ class ProdutoController extends Controller
      */
     public function store(StoreProdutoRequest $request)
     {
+        $validated = $request->validated();
         $inputs = $request->all();
 
         $produtos = Produto::create($inputs);
         return response()->json([
             "success" => true,
             "message" => "Tipo Produto criado com sucesso.",
-            "data" => $produtos
-        ]);
+            "data" => $produtos,
+        ],201);
     }
 
     /**
@@ -70,6 +71,7 @@ class ProdutoController extends Controller
      */
     public function update(StoreProdutoRequest $request, Produto $produto)
     {
+        $request->validated();
         $inputs = $request->all();
         $produto->name = $inputs['name'];
         $produto->quantity += $inputs['quantity'];
@@ -102,16 +104,17 @@ class ProdutoController extends Controller
     /**
      *  TO DO improve this code for a better way
      */
-    public function updateFromArray(Request $request)
+    public function updateFromArray(StoreProdutoRequest $request)
     {
-        $produtos = $request->all();
 
+       $request->validated();
+
+        $produtos = $request->all();
         foreach ($produtos as $produto){
-            $validade = $request->validate();
-            $produtosRecovery = Produto::where('name', $produto['name'])->first();
-            if($produtosRecovery){
-                $quantity = $produtosRecovery->quantity + $produto['quantity'];
-                $produtosRecovery->update(['quantity' => $quantity]);
+            $product = Produto::where('name', $produto['name'])->first();
+            if($product){
+                $quantity = $product->quantity + $produto['quantity'];
+                $product->update(['quantity' => $quantity]);
             }
 
         }
