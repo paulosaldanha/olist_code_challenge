@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProdutoController;
-use App\Http\Controllers\TipoProdutoController;
+//use ProdutoController;
+//use App\Http\Controllers\TipoProdutoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +25,4 @@ Route::apiResources([
     'tipo-produtos' => TipoProdutoController::class,
 ]);
 
-Route::post('produtos/fromArray','ProdutoController@updateFromArray');
+Route::post('produtos/update-array','ProdutoController@updateFromArray');
